@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Groomd - Your essential ski companion. View grooming reports, track lift status, and monitor snow conditions in real-time.">
+    <meta name="theme-color" content="#1a365d">
+
+    <title>Groomd - Ski Mountain Reports</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Groomd - Ski Mountain Reports">
+    <meta property="og:description" content="Your essential ski companion. View grooming reports, track lift status, and monitor snow conditions.">
+    <meta property="og:image" content="assets/groomd_icon.png">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/groomd_icon.png">
+    <link rel="apple-touch-icon" href="assets/groomd_icon.png">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1MB90ZZJ7V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-1MB90ZZJ7V');
+    </script>
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: url('assets/website_background.png') center top / cover no-repeat fixed;
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 3rem 1.5rem 2rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding-top: 2rem;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 22px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin: 0 auto 1.25rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.85;
+            font-weight: 500;
+        }
+
+        /* Sticky Nav */
+        .sticky-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .sticky-nav.visible {
+            transform: translateY(0);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .nav-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+        }
+
+        .nav-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .nav-app-store img {
+            height: 36px;
+        }
+
+        /* Features Carousel */
+        .features {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2.5rem 0;
+        }
+
+        .carousel {
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.4s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .slide img {
+            width: 260px;
+            max-width: 100%;
+            border-radius: 36px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .slide-info {
+            text-align: center;
+            margin-top: 1.5rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 1.25rem 1.5rem;
+            border-radius: 16px;
+            max-width: 340px;
+        }
+
+        .slide-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .slide-desc {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+
+        /* Carousel Nav */
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            border: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .dot.active {
+            background: #fff;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .carousel-track {
+            cursor: grab;
+        }
+
+        .carousel-track.dragging {
+            cursor: grabbing;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 1rem;
+        }
+
+        .app-store {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-store img {
+            height: 44px;
+            transition: 0.2s ease;
+        }
+
+        .app-store:hover img {
+            transform: scale(1.05);
+        }
+
+        .footer-links {
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links span {
+            margin: 0 0.5rem;
+        }
+
+        /* Tablet+ */
+        @media (min-width: 768px) {
+            .logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            .tagline {
+                font-size: 1.1rem;
+            }
+
+            .slide img {
+                width: 300px;
+            }
+
+            .slide-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Nav -->
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <img src="assets/groomd_icon.png" alt="Groomd" class="nav-logo">
+                <span class="nav-title">Groomd</span>
+            </div>
+            <a href="#" class="nav-app-store" aria-label="Download on the App Store">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+            </a>
+        </div>
+    </nav>
+
+    <div class="page">
+        <!-- Header -->
+        <header class="header" id="header">
+            <img src="assets/groomd_icon.png" alt="Groomd" class="logo">
+            <h1>Groomd</h1>
+            <p class="tagline">Ski Mountain Reports</p>
+        </header>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="carousel">
+                <div class="carousel-track" id="track">
+                    <div class="slide">
+                        <img src="assets/Groomd_Trails.PNG" alt="Grooming Reports">
+                        <div class="slide-info">
+                            <h2 class="slide-title">View Grooming Reports</h2>
+                            <p class="slide-desc">Real-time trail conditions so you always find the freshest runs.</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="assets/Groomd_Lifts.PNG" alt="Lift Status">
+                        <div class="slide-info">
+                            <h2 class="slide-title">Track Lift Status</h2>
+                            <p class="slide-desc">Know which lifts are spinning before you get in line.</p>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <img src="assets/Groomd_Weather.PNG" alt="Snow Conditions">
+                        <div class="slide-info">
+                            <h2 class="slide-title">Monitor Snow Conditions</h2>
+                            <p class="slide-desc">Detailed forecasts and current conditions at a glance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <div class="dots" id="dots"></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <a href="#" class="app-store" aria-label="Download on the App Store">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+            </a>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <span>&copy; 2025-2026 Groomd</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const track = document.getElementById('track');
+        const slides = document.querySelectorAll('.slide');
+        const dotsEl = document.getElementById('dots');
+        let current = 0;
+        let auto;
+
+        // Create dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => go(i);
+            dotsEl.appendChild(dot);
+        });
+
+        function go(i) {
+            current = i;
+            if (current >= slides.length) current = 0;
+            if (current < 0) current = slides.length - 1;
+            track.style.transform = `translateX(-${current * 100}%)`;
+            document.querySelectorAll('.dot').forEach((d, j) => d.classList.toggle('active', j === current));
+            resetAuto();
+        }
+
+        // Touch swipe
+        let startX, isDragging = false;
+        track.addEventListener('touchstart', e => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        }, {passive: true});
+        track.addEventListener('touchend', e => {
+            if (!isDragging) return;
+            isDragging = false;
+            const diff = startX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
+        });
+
+        // Mouse drag
+        let mouseStartX, isMouseDragging = false;
+        track.addEventListener('mousedown', e => {
+            mouseStartX = e.clientX;
+            isMouseDragging = true;
+            track.classList.add('dragging');
+            e.preventDefault();
+        });
+        document.addEventListener('mousemove', e => {
+            if (!isMouseDragging) return;
+            e.preventDefault();
+        });
+        document.addEventListener('mouseup', e => {
+            if (!isMouseDragging) return;
+            isMouseDragging = false;
+            track.classList.remove('dragging');
+            const diff = mouseStartX - e.clientX;
+            if (Math.abs(diff) > 50) go(current + (diff > 0 ? 1 : -1));
+        });
+
+        // Autoplay
+        function resetAuto() {
+            clearInterval(auto);
+            auto = setInterval(() => go(current + 1), 5000);
+        }
+        resetAuto();
+
+        // Pause on interaction
+        track.addEventListener('mouseenter', () => clearInterval(auto));
+        track.addEventListener('mouseleave', resetAuto);
+
+        // Sticky nav
+        const nav = document.getElementById('stickyNav');
+        const header = document.getElementById('header');
+        const observer = new IntersectionObserver(
+            ([entry]) => nav.classList.toggle('visible', !entry.isIntersecting),
+            { threshold: 0, rootMargin: '-60px 0px 0px 0px' }
+        );
+        observer.observe(header);
+    </script>
+</body>
+</html>
