@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Support - Get help with Groomd. Submit feedback, report issues, or request features.">
+
+    <title>Support - Groomd</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/groomd_icon.png">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1MB90ZZJ7V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-1MB90ZZJ7V');
+    </script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .support-header {
+            background: var(--color-primary);
+            padding: 4rem 1.5rem 3rem;
+            text-align: center;
+        }
+
+        .support-header a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--color-white);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .support-header a:hover {
+            color: var(--color-accent-light);
+        }
+
+        .support-header a svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .support-header h1 {
+            font-size: clamp(1.75rem, 5vw, 2.5rem);
+            font-weight: 700;
+            color: var(--color-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .support-header p {
+            color: var(--color-ice);
+            font-size: 0.95rem;
+        }
+
+        .support-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 5rem;
+            text-align: center;
+        }
+
+        .support-intro {
+            color: var(--color-slate);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-container iframe {
+            max-width: 100%;
+            border: none;
+            border-radius: var(--radius-md);
+        }
+
+        .form-link {
+            display: inline-block;
+            color: var(--color-accent);
+            text-decoration: underline;
+            margin-top: 1rem;
+        }
+
+        .form-link:hover {
+            color: var(--color-primary);
+        }
+
+        @media (min-width: 768px) {
+            .support-header {
+                padding: 5rem 2rem 4rem;
+            }
+
+            .support-content {
+                padding: 4rem 2rem 6rem;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .support-header {
+                background: #1e293b;
+            }
+
+            .support-header a {
+                color: #e2e8f0;
+            }
+
+            .support-header a:hover {
+                color: #63b3ed;
+            }
+
+            .support-header h1 {
+                color: #f1f5f9;
+            }
+
+            .support-header p {
+                color: #94a3b8;
+            }
+
+            .support-content {
+                background: #0f172a;
+            }
+
+            .support-intro {
+                color: #94a3b8;
+            }
+
+            .form-link {
+                color: #63b3ed;
+            }
+
+            .form-link:hover {
+                color: #90cdf4;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="support-header">
+        <a href="index.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            Back to Home
+        </a>
+        <h1>Support</h1>
+        <p>We're here to help</p>
+    </header>
+
+    <main class="support-content">
+        <p class="support-intro">
+            Have a question, feedback, or need help with Groomd? Fill out the form below and we'll get back to you as soon as possible.
+        </p>
+
+        <div class="form-container">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdOgxOXgF2prJ4HyljSan8ATSe1Dj3nE0A8ySD0zQ4LlUGlEg/viewform?embedded=true" width="640" height="559" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+        </div>
+
+        <a href="https://forms.gle/XXQ4rLm4MSQxs7Lm9" class="form-link" target="_blank" rel="noopener">
+            Open form in new window
+        </a>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="assets/groomd_icon.png" alt="Groomd" class="footer-logo">
+            <nav class="footer-nav">
+                <a href="index.html">Home</a>
+            </nav>
+            <p class="copyright">&copy; 2025-2026 Groomd. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
