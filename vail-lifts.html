@@ -351,12 +351,7 @@
     <!-- Half-sheet CTA (injected by JS after blur) -->
     <div class="half-sheet" id="half-sheet" style="display: none;">
       <div class="half-sheet-top">
-        <span class="half-sheet-count" id="half-sheet-count">+0 more</span>
-        <div class="half-sheet-features">
-          <span class="half-sheet-feat"><span class="ico">&#x2191;&#x2193;</span> Live wait times</span>
-          <span class="half-sheet-feat"><span class="ico">&#x2744;</span> Grooming reports</span>
-          <span class="half-sheet-feat"><span class="ico">&#x26C5;</span> Weather forecasts</span>
-        </div>
+        <span class="half-sheet-count">More Lifts in the Free App</span>
       </div>
       <a href="https://apps.apple.com/us/app/groomd-ski-mountain-reports/id6756031302" class="half-sheet-btn" aria-label="Download on the App Store">
         <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
@@ -511,13 +506,7 @@
       container.innerHTML = html;
 
       // --- Show half-sheet CTA ---
-      const hiddenCount = Math.max(0, totalOther);
       const sheet = $('half-sheet');
-      if (hiddenCount > 0) {
-        $('half-sheet-count').textContent = `+${hiddenCount} more`;
-      } else {
-        $('half-sheet-count').textContent = `${lifts.length} lifts`;
-      }
       sheet.style.display = '';
     }
 
