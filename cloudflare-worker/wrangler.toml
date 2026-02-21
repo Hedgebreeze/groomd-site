@@ -1,0 +1,10 @@
+name = "groomd-api"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+workers_dev = true
+
+# After deploying, add your custom domain:
+#   npx wrangler domains add api.groomd.app
+#
+# Until then, the worker is available at:
+#   https://groomd-api.<your-account>.workers.dev
