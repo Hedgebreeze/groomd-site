@@ -1,0 +1,23 @@
+What you do manually (10 min, one-time)
+Create a free Cloudflare account at cloudflare.com (if you don't have one)
+Install Wrangler (Cloudflare's CLI): npm install -g wrangler
+Authenticate: npx wrangler login — opens browser, click "Allow"
+Add groomd.app to Cloudflare (for the api.groomd.app custom domain):
+In Cloudflare dashboard: "Add a site" → enter groomd.app → select Free plan
+Cloudflare will give you two nameservers (e.g. ada.ns.cloudflare.com, ben.ns.cloudflare.com)
+Go to your domain registrar (wherever you bought groomd.app) and change the nameservers to the Cloudflare ones
+Important: Cloudflare will import your existing DNS records. Verify that the GitHub Pages records are preserved (CNAME or A records pointing to GitHub). This keeps groomd.app working as-is.
+DNS propagation takes 5 min to a few hours
+Shortcut if you want to skip DNS for now: We can use *.workers.dev URL instead of api.groomd.app. This means zero DNS changes — everything works immediately. You can add the custom domain later. The only difference is the URL in the network tab says groomd-api.YOUR_ACCOUNT.workers.dev instead of api.groomd.app.
+
+What Claude Code does (hand it off after step 3 above)
+Once wrangler login is done, Claude Code can handle everything else:
+
+Write cloudflare-worker/worker.js and cloudflare-worker/wrangler.toml
+Run npx wrangler deploy to push the worker live
+Run npx wrangler domains add api.groomd.app to attach the custom domain (if DNS is set up)
+Test with curl to verify the proxy works
+Write vail-lifts.html with the ski-sign design
+Update index.html footer link
+Commit and push to deploy to GitHub Pages
+Can Claude cowork handle DNS? Not the registrar nameserver change (that's a web UI at your registrar). But everything else — Cloudflare Worker creation, deployment, custom domain attachment, and all the code — yes, fully automatable via wrangler CLI. The manual part is truly just "change nameservers" and "click Allow on the wrangler login page."
