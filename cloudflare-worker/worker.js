@@ -3,13 +3,16 @@
 
 const ORIGIN = 'http://46.62.169.104.nip.io';
 
-const ROUTES = {
-  '/vail/lifts': '/data/vail/lifts/index.json',
-  // Add more routes as needed:
-  // '/led/vail': '/data/vail/lifts/index.json',
-};
+function cacheTtl(pathname) {
+  if (pathname.endsWith('.ndjson')) return 60;
+  if (pathname.endsWith('index.json')) return 30;
+  return 30;
+}
 
-const CACHE_TTL = 30;
+function contentType(pathname) {
+  if (pathname.endsWith('.ndjson')) return 'application/x-ndjson';
+  return 'application/json';
+}
 
 export default {
   async fetch(request) {
@@ -29,24 +32,24 @@ export default {
       return corsResponse(request, 'Method not allowed', 405);
     }
 
-    const originPath = ROUTES[url.pathname];
-    if (!originPath) {
+    if (!url.pathname.startsWith('/data/')) {
       return corsResponse(request, 'Not found', 404);
     }
 
     try {
-      const resp = await fetch(ORIGIN + originPath, {
+      const ttl = cacheTtl(url.pathname);
+      const resp = await fetch(ORIGIN + url.pathname, {
         headers: { 'User-Agent': 'groomd-api-proxy' },
+        cf: { cacheTtl: ttl },
       });
-      const body = await resp.text();
 
       if (resp.status >= 400) {
         return corsResponse(request, JSON.stringify({ error: 'Origin error' }), 502);
       }
 
-      return corsResponse(request, body, 200, {
-        'Content-Type': 'application/json',
-        'Cache-Control': `public, max-age=${CACHE_TTL}`,
+      return corsResponse(request, resp.body, 200, {
+        'Content-Type': contentType(url.pathname),
+        'Cache-Control': `public, max-age=${ttl}`,
       });
     } catch (err) {
       return corsResponse(request, JSON.stringify({ error: 'Origin unreachable' }), 502);
