@@ -23,11 +23,8 @@
     <link rel="icon" type="image/png" href="assets/groomd_icon.png">
     <link rel="apple-touch-icon" href="assets/groomd_icon.png">
 
-    <!-- Preload phone screenshots -->
-    <link rel="preload" as="image" href="assets/new_design/Groomd_Home_New.PNG">
-    <link rel="preload" as="image" href="assets/new_design/Groomd_Grooming_New.PNG">
-    <link rel="preload" as="image" href="assets/new_design/Groomd_Lifts_New.PNG">
-    <link rel="preload" as="image" href="assets/new_design/Groomd_Snow_New.PNG">
+    <!-- Preload hero image -->
+    <link rel="preload" as="image" href="assets/new_design/Groomd_Website_Hero.png">
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1MB90ZZJ7V"></script>
@@ -50,9 +47,6 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #0a0e1a;
             color: #f1f5f9;
-            overflow: hidden;
-            height: 100vh;
-            height: 100dvh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -187,170 +181,203 @@
             transform: scale(1.05);
         }
 
-        /* ========== PAGE LAYOUT (single viewport) ========== */
+        /* ========== PAGE LAYOUT ========== */
         .page {
             position: relative;
             z-index: 2;
-            height: 100vh;
-            height: 100dvh;
             padding-top: 60px;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* ========== SHOWCASE ========== */
-        .showcase {
-            flex: 1;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem 1.25rem;
-            gap: 0.6rem;
+        /* ========== HERO ========== */
+        .hero {
+            padding: 1rem 0 2.5rem;
         }
 
-        /* Phone — fills available vertical space */
-        .phone-frame {
-            flex: 1;
-            min-height: 0;
-            display: grid;
-            place-items: center;
-        }
-
-        .phone-img {
-            grid-area: 1 / 1;
-            max-height: 100%;
-            width: auto;
-            max-width: min(55vw, 240px);
-            border-radius: 22px;
-            opacity: 0;
-            transform: scale(0.97);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .phone-img.active {
-            opacity: 1;
-            transform: scale(1);
-            box-shadow:
-                0 24px 64px rgba(0, 0, 0, 0.5),
-                0 0 80px rgba(59, 130, 246, 0.06),
-                0 0 0 1px rgba(255, 255, 255, 0.04);
-        }
-
-        /* Info (text + dots) */
-        .info {
-            flex-shrink: 0;
+        .hero-text {
             text-align: center;
-            width: 100%;
-            max-width: 480px;
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            padding: 0 1.25rem;
         }
 
-        .branding {
-            display: none;
-        }
-
-        .branding h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
+        .hero-text h1 {
+            font-size: clamp(1.75rem, 5vw, 3rem);
             font-weight: 800;
             letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 0.75rem;
         }
 
-        .branding .tagline {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: rgba(255, 255, 255, 0.45);
-            font-weight: 500;
-            margin-top: 0.25rem;
+        .hero-text p {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: #cbd5e1;
+            line-height: 1.6;
         }
 
-        .text-stack {
+        .hero-image {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        /* ========== FEATURE SECTIONS ========== */
+        .feature-section {
+            padding: 3rem 1.25rem;
+        }
+
+        .feature-inner {
+            max-width: 1100px;
+            margin: 0 auto;
             display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            align-items: center;
         }
 
-        .feature-text {
-            grid-area: 1 / 1;
-            opacity: 0;
-            transform: translateY(6px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+        /* Mobile order: heading → images → body */
+        .feature-heading {
+            order: 1;
         }
 
-        .feature-text.active {
-            opacity: 1;
-            transform: translateY(0);
+        .feature-images {
+            order: 2;
         }
 
-        .feature-text h2 {
-            font-size: clamp(1rem, 4vw, 1.75rem);
+        .feature-body {
+            order: 3;
+        }
+
+        .feature-heading h2 {
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
             font-weight: 700;
             letter-spacing: -0.02em;
-            margin-bottom: 0.25rem;
-            line-height: 1.25;
+            line-height: 1.2;
         }
 
-        .feature-text p {
+        .feature-body p {
+            font-size: clamp(0.95rem, 2vw, 1.125rem);
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .feature-body .footnote {
             font-size: 0.8rem;
-            color: #94a3b8;
-            line-height: 1.4;
-        }
-
-        .feature-text .disclaimer {
-            font-size: 0.7rem;
             color: #64748b;
-            margin-top: 0.15rem;
             font-style: italic;
+            margin-top: 0.5rem;
         }
 
-        .progress-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 0.75rem;
-        }
-
-        .pdot {
-            width: 8px;
-            height: 8px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            cursor: pointer;
-            transition: width 0.3s ease, background 0.3s ease;
+        /* ========== IMAGE PAIRS ========== */
+        .feature-images {
             position: relative;
-            overflow: hidden;
-            padding: 0;
+            width: 90%;
+            margin: 0 auto;
         }
 
-        .pdot.active {
-            width: 36px;
-            background: rgba(59, 130, 246, 0.25);
+        .feature-images--landscape {
+            aspect-ratio: 6 / 5;
         }
 
-        .pdot.active::after {
-            content: '';
+        .feature-images--portrait {
+            aspect-ratio: 6 / 5;
+        }
+
+        .frame {
             position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            background: #3b82f6;
-            border-radius: 4px;
-            animation: dotFill 4s linear forwards;
+            border-radius: 12px;
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.06);
+            height: auto;
         }
 
-        .pdot:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.3);
+        .frame-back {
+            width: 68%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .frame-front {
+            width: 68%;
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+        }
+
+        /* ========== VAIL PREVIEW ========== */
+        .preview-section {
+            padding: 3rem 1.25rem 2rem;
+        }
+
+        .preview-inner {
+            max-width: 400px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            overflow: hidden;
+        }
+
+        .preview-image {
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .preview-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .preview-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .preview-content h3 {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .preview-content p {
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .preview-cta {
+            display: inline-block;
+            padding: 0.65rem 1.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            background: #3b82f6;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .preview-cta:hover {
+            background: #2563eb;
+            transform: scale(1.03);
         }
 
         /* ========== FOOTER ========== */
         .footer {
-            flex-shrink: 0;
-            padding: 0.5rem 1.25rem 0.6rem;
+            padding: 2rem 1.25rem 3rem;
             text-align: center;
         }
 
         .footer-links {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: #4a5568;
         }
 
@@ -369,48 +396,125 @@
             color: #2d3748;
         }
 
+        /* ========== SCROLL REVEAL ========== */
+        [data-reveal] .feature-heading,
+        [data-reveal] .feature-body {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-reveal] .feature-body {
+            transition-delay: 0.1s;
+        }
+
+        [data-reveal].revealed .feature-heading,
+        [data-reveal].revealed .feature-body {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        [data-reveal] .frame-back {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+        }
+
+        [data-reveal] .frame-front {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s,
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+        }
+
+        [data-reveal].revealed .frame-back,
+        [data-reveal].revealed .frame-front {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Vail preview section reveal */
+        [data-reveal] .preview-inner {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-reveal].revealed .preview-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* ========== KEYFRAMES ========== */
         @keyframes snowfall {
             from { transform: translateY(0); }
             to { transform: translateY(700px); }
         }
 
-        @keyframes dotFill {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
         /* ========== RESPONSIVE: TABLET (768px+) ========== */
         @media (min-width: 768px) {
-            .showcase {
-                gap: 1rem;
-                padding: 1rem 2rem;
+            .hero {
+                padding: 1.5rem 0 3rem;
             }
 
-            .phone-img {
-                max-width: min(45vw, 300px);
-                border-radius: 32px;
+            .hero-image {
+                padding: 0 2rem;
             }
 
-            .feature-text h2 {
-                margin-bottom: 0.5rem;
+            .hero-text {
+                padding: 0 2rem;
             }
 
-            .feature-text p {
-                font-size: 0.95rem;
-                line-height: 1.5;
+            .feature-section {
+                padding: 3.5rem 2rem;
             }
 
-            .feature-text .disclaimer {
-                font-size: 0.8rem;
+            .feature-inner {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto 1fr;
+                gap: 1rem 3rem;
             }
 
-            .progress-dots {
-                margin-top: 1rem;
+            .feature-heading {
+                grid-column: 1;
+                grid-row: 1;
+                order: unset;
+                align-self: end;
+            }
+
+            .feature-body {
+                grid-column: 1;
+                grid-row: 2;
+                order: unset;
+                align-self: start;
+            }
+
+            .feature-images {
+                grid-column: 2;
+                grid-row: 1 / -1;
+                order: unset;
+                width: 100%;
+                align-self: center;
+            }
+
+            /* Reversed: images left, text right */
+            .feature-section--reversed .feature-heading {
+                grid-column: 2;
+            }
+
+            .feature-section--reversed .feature-body {
+                grid-column: 2;
+            }
+
+            .feature-section--reversed .feature-images {
+                grid-column: 1;
             }
 
             .footer {
-                padding: 0.75rem 2rem;
+                padding: 2rem 2rem 3rem;
             }
 
             .footer-links {
@@ -424,81 +528,23 @@
                 background-size: 800px auto;
             }
 
-            .showcase {
-                flex-direction: row;
+            .feature-section {
+                padding: 4rem 2rem;
+            }
+
+            .feature-inner {
                 gap: 4rem;
-                padding: 2rem 4rem;
             }
 
-            .phone-frame {
-                flex: 0 0 auto;
-                height: min(55vh, 520px);
-                order: 2;
-            }
-
-            .phone-img {
-                max-height: 100%;
-                width: auto;
-                max-width: none;
-                border-radius: 28px;
-            }
-
-            .info {
-                order: 1;
-                flex: 0 1 420px;
-                text-align: left;
-            }
-
-            .branding {
-                display: block;
-                margin-bottom: 2rem;
-            }
-
-            .progress-dots {
-                justify-content: flex-start;
-            }
-
-            .text-stack {
-                min-height: 100px;
-            }
-
-            .feature-text h2 {
-                font-size: 1.6rem;
-                margin-bottom: 0.6rem;
-            }
-
-            .feature-text p {
-                font-size: 1.05rem;
-                line-height: 1.6;
+            .hero-image img {
+                border-radius: 16px;
             }
         }
 
         /* ========== RESPONSIVE: LARGE (1280px+) ========== */
         @media (min-width: 1280px) {
-            .showcase {
-                gap: 6rem;
-                max-width: 1100px;
-                margin: 0 auto;
-            }
-
-            .phone-frame {
-                height: min(60vh, 580px);
-            }
-
-            .info {
-                flex: 0 1 460px;
-            }
-
-            .branding {
-                margin-bottom: 2.5rem;
-            }
-
-            .branding h1 {
-                font-size: 3.5rem;
-            }
-
-            .feature-text h2 {
-                font-size: 1.75rem;
+            .feature-inner {
+                gap: 5rem;
             }
         }
 
@@ -535,46 +581,81 @@
         </div>
     </nav>
 
-    <!-- Single-page layout — no scrolling -->
     <main class="page">
-        <div class="showcase" id="showcase">
-            <div class="phone-frame">
-                <img src="assets/new_design/Groomd_Home_New.PNG" alt="Mountain Overview" class="phone-img active">
-                <img src="assets/new_design/Groomd_Grooming_New.PNG" alt="Grooming Reports" class="phone-img">
-                <img src="assets/new_design/Groomd_Lifts_New.PNG" alt="Lift Status" class="phone-img">
-                <img src="assets/new_design/Groomd_Snow_New.PNG" alt="Weather & Snow" class="phone-img">
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Groomd: Your unfair advantage on the mountain.</h1>
+                <p>Live lifts, grooming reports, and snow conditions at 60 resorts &mdash; all in one app.</p>
             </div>
-            <div class="info">
-                <div class="branding">
-                    <h1>Groomd</h1>
-                    <p class="tagline">Ski Mountain Reports</p>
+            <div class="hero-image">
+                <img src="assets/new_design/Groomd_Website_Hero.png" alt="Groomd app showing live lift status, grooming reports, and weather on iPhone">
+            </div>
+        </section>
+
+        <!-- Lifts -->
+        <section class="feature-section" data-reveal>
+            <div class="feature-inner">
+                <div class="feature-heading">
+                    <h2>Lift line status &mdash; without lifting a finger.</h2>
                 </div>
-                <div class="text-stack">
-                    <div class="feature-text active">
-                        <h2>All mountain details, all in one screen.</h2>
-                        <p>Lifts, grooming, weather, and more &mdash; all updated in real time.</p>
-                    </div>
-                    <div class="feature-text">
-                        <h2>Daily Grooming Reports &amp; Trail-specific Trends</h2>
-                        <p>See exactly which runs were groomed today, organized by area.</p>
-                    </div>
-                    <div class="feature-text">
-                        <h2>Live lift wait times on your lock screen*.</h2>
-                        <p class="disclaimer">*Live wait times not available at all resorts</p>
-                    </div>
-                    <div class="feature-text">
-                        <h2>Know the snow before you go.</h2>
-                        <p>Forecasts, snowfall totals, and base depth &mdash; at a glance.</p>
-                    </div>
+                <div class="feature-images feature-images--portrait">
+                    <img src="assets/new_design/Lifts_Frame_1.PNG" alt="In-app lift status with wait times" class="frame frame-back">
+                    <img src="assets/new_design/Lifts_Frame_2.png" alt="Lift wait times widget on lock screen" class="frame frame-front">
                 </div>
-                <div class="progress-dots" id="dots">
-                    <button class="pdot active" data-index="0" aria-label="Feature 1"></button>
-                    <button class="pdot" data-index="1" aria-label="Feature 2"></button>
-                    <button class="pdot" data-index="2" aria-label="Feature 3"></button>
-                    <button class="pdot" data-index="3" aria-label="Feature 4"></button>
+                <div class="feature-body">
+                    <p>Get live lift status* and wait times right on your lock screen and Dynamic Island. Avoid the lines and maximize your vert.</p>
+                    <p class="footnote">*Real-time lift wait times only available at select resorts.</p>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Grooming -->
+        <section class="feature-section feature-section--reversed" data-reveal>
+            <div class="feature-inner">
+                <div class="feature-heading">
+                    <h2>Grooming Reports &amp; Terrain History</h2>
+                </div>
+                <div class="feature-images feature-images--landscape">
+                    <img src="assets/new_design/Grooming_Frame_1.PNG" alt="Daily grooming report by zone" class="frame frame-back">
+                    <img src="assets/new_design/Grooming_Frame_2.PNG" alt="Grooming stats and history" class="frame frame-front">
+                </div>
+                <div class="feature-body">
+                    <p>Daily grooming reports for every resort &amp; stats for every run, organized by zone and updated each morning. Find your terrain without the effort.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather -->
+        <section class="feature-section" data-reveal>
+            <div class="feature-inner">
+                <div class="feature-heading">
+                    <h2>Weather Forecasts &amp; Snow Reports</h2>
+                </div>
+                <div class="feature-images feature-images--landscape">
+                    <img src="assets/new_design/Weather_Frame_1.PNG" alt="Weather forecast with temperatures" class="frame frame-back">
+                    <img src="assets/new_design/Weather_Frame_2.PNG" alt="Snow report with base depth" class="frame frame-front">
+                </div>
+                <div class="feature-body">
+                    <p>Real snowfall totals, base depth graphs, and multi-day forecasts. Everything you need to know before putting on that extra layer &mdash; or not.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vail Preview -->
+        <section class="preview-section" data-reveal>
+            <div class="preview-inner">
+                <div class="preview-image">
+                    <img src="assets/new_design/Live_Lifts_Preview.png" alt="Live Vail lift status showing wait times">
+                </div>
+                <div class="preview-content">
+                    <h3>Not quite ready to send it?</h3>
+                    <p>Preview live lift times right in your browser &mdash; no download required.</p>
+                    <a href="vail-lifts.html" class="preview-cta">View Vail Lifts &mdash; Live</a>
+                </div>
+            </div>
+        </section>
 
         <footer class="footer">
             <div class="footer-links">
@@ -589,42 +670,24 @@
     </main>
 
     <script>
-        // === Feature auto-advance ===
-        const phoneImgs = document.querySelectorAll('.phone-img');
-        const featureTexts = document.querySelectorAll('.feature-text');
-        const dots = document.querySelectorAll('.pdot');
-        const showcase = document.getElementById('showcase');
-        let current = 0;
-        let timer;
-        const INTERVAL = 4000;
+        // Scroll-reveal animation
+        const reveals = document.querySelectorAll('[data-reveal]');
 
-        function show(index) {
-            phoneImgs.forEach((img, i) => img.classList.toggle('active', i === index));
-            featureTexts.forEach((txt, i) => txt.classList.toggle('active', i === index));
-            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-            current = index;
-        }
-
-        function advance() {
-            show((current + 1) % phoneImgs.length);
-        }
-
-        function startTimer() {
-            clearInterval(timer);
-            timer = setInterval(advance, INTERVAL);
-        }
-
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                show(parseInt(dot.dataset.index));
-                startTimer();
-            });
-        });
-
-        startTimer();
-
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            clearInterval(timer);
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.15 }
+            );
+            reveals.forEach(section => observer.observe(section));
+        } else {
+            reveals.forEach(section => section.classList.add('revealed'));
         }
     </script>
 </body>
