@@ -122,8 +122,13 @@
     /* ── Wood Frame ── */
     .frame-wrapper {
       max-width: 720px;
-      margin: 20px auto;
+      margin: 0 auto;
       padding: 0 12px;
+      height: calc(100dvh - 50px);
+      height: calc(100vh - 50px); /* fallback */
+      height: calc(100dvh - 50px); /* preferred */
+      display: flex;
+      flex-direction: column;
     }
     .wood-frame {
       position: relative;
@@ -131,6 +136,10 @@
       border-radius: 8px;
       background: var(--led-bg);
       background-clip: padding-box;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
     /* Wood border — real texture tile + dark brown tint */
     .wood-frame::before {
@@ -602,8 +611,23 @@
       text-shadow: 0 0 4px var(--open-glow);
     }
 
+    /* ── Lift container: internal scroll ── */
+    #lift-container {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
     /* ── Scanlines overlay on lift LED panel ── */
-    .led-panel--scanlines { position: relative; }
+    .led-panel--scanlines {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
     .led-panel--scanlines::before {
       content: '';
       position: absolute;
@@ -680,10 +704,66 @@
       margin: 0 auto;
     }
 
+    /* ── Open-lifts upsell: compact horizontal card ── */
+    .open-upsell {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: var(--led-bg);
+      text-decoration: none;
+      position: relative;
+      z-index: 1;
+    }
+    .open-upsell-copy {
+      flex: 1;
+      min-width: 0;
+    }
+    .open-upsell-headline {
+      font-family: "AvenirNextCondensed-DemiBold", "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      font-size: clamp(13px, 3.5vw, 16px);
+      font-weight: 800;
+      color: var(--led-text);
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 3px;
+    }
+    .open-upsell-headline em {
+      color: var(--open);
+      text-shadow: 0 0 6px var(--open-glow);
+      font-style: normal;
+    }
+    .open-upsell-sub {
+      font-size: 10px;
+      color: var(--led-dim);
+      letter-spacing: 0.2px;
+      line-height: 1.4;
+      margin-bottom: 7px;
+    }
+    .open-upsell-badge img {
+      height: 22px;
+      display: block;
+    }
+    .open-upsell-image {
+      flex-shrink: 0;
+      width: 76px;
+      height: 64px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 8px;
+      box-shadow:
+        0 4px 14px rgba(0,0,0,0.65),
+        0 0 0 1px rgba(255,255,255,0.07);
+      opacity: 0.92;
+    }
+
     /* ── Responsive ── */
     @media (max-width: 599px) {
       .lift-grid.two-col { grid-template-columns: 1fr; }
-      .frame-wrapper { padding: 0 8px; margin: 12px auto; }
+      .frame-wrapper { padding: 0 8px; margin: 0 auto; }
       .wood-frame { border-width: 18px; }
       .wood-frame::before { inset: -18px; }
       .bracket { width: 18px; height: 18px; }
@@ -764,9 +844,8 @@
           <div class="board-msg loading">LOADING...</div>
         </div>
 
-        <div class="lift-more-row" id="lift-more-row" style="display:none;">
-          TAP FOR FULL BOARD
-        </div>
+        <div id="lift-more-row" style="display:none;"></div>
+        <div id="open-upsell" style="display:none;"></div>
       </div>
     </div>
   </div>
@@ -957,6 +1036,7 @@
             </a>
           </div>`;
         $('lift-more-row').style.display = 'none';
+        $('open-upsell').style.display = 'none';
         return;
       }
 
@@ -985,9 +1065,22 @@
       }
 
       container.innerHTML = html;
+      $('lift-more-row').style.display = 'none';
 
-      // --- Show footer rows ---
-      $('lift-more-row').style.display = '';
+      // --- Open-lifts upsell: compact horizontal card, anchored at bottom ---
+      const upsellEl = $('open-upsell');
+      upsellEl.style.display = '';
+      upsellEl.innerHTML = `
+        <a class="open-upsell" href="${CONFIG.APP_STORE_URL}" aria-label="Download Groomd on the App Store">
+          <div class="open-upsell-copy">
+            <div class="open-upsell-headline">See all lift times.<br><em>Pick your favorites.</em></div>
+            <div class="open-upsell-sub">Live at 60+ resorts &mdash; free on iOS.</div>
+            <div class="open-upsell-badge">
+              <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+            </div>
+          </div>
+          <img class="open-upsell-image" src="assets/new_design/Groomd_Website_Hero.png" alt="Groomd app">
+        </a>`;
     }
 
     async function fetchData() {
