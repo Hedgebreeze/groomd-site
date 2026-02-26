@@ -132,11 +132,19 @@
             left: 0;
             right: 0;
             height: 60px;
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            z-index: 100;
+            border-bottom: 1px solid transparent;
+            transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+        }
+
+        .nav.scrolled {
             background: rgba(10, 14, 26, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom-color: rgba(255, 255, 255, 0.06);
         }
 
         .nav-inner {
@@ -170,6 +178,13 @@
         .nav-tagline {
             font-weight: 400;
             color: rgba(255, 255, 255, 0.5);
+            display: none;
+        }
+
+        @media (min-width: 480px) {
+            .nav-tagline {
+                display: inline;
+            }
         }
 
         .nav-cta img {
@@ -185,18 +200,18 @@
         .page {
             position: relative;
             z-index: 2;
-            padding-top: 60px;
         }
 
         /* ========== HERO ========== */
         .hero {
-            padding: 1rem 0 2.5rem;
+            padding: 0.5rem 0 2.5rem;
+            padding-top: calc(60px + 0.75rem);
         }
 
         .hero-text {
             text-align: center;
             max-width: 680px;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto 1rem;
             padding: 0 1.25rem;
         }
 
@@ -602,7 +617,7 @@
                 </div>
                 <div class="feature-images feature-images--portrait">
                     <img src="assets/new_design/Lifts_Frame_1.PNG" alt="In-app lift status with wait times" class="frame frame-back">
-                    <img src="assets/new_design/Lifts_Frame_2.png" alt="Lift wait times widget on lock screen" class="frame frame-front">
+                    <img src="assets/new_design/Lifts_Frame_2.PNG" alt="Lift wait times widget on lock screen" class="frame frame-front">
                 </div>
                 <div class="feature-body">
                     <p>Get live lift status* and wait times right on your lock screen and Dynamic Island. Avoid the lines and maximize your vert.</p>
@@ -670,6 +685,12 @@
     </main>
 
     <script>
+        // Nav scroll behavior
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+        }, { passive: true });
+
         // Scroll-reveal animation
         const reveals = document.querySelectorAll('[data-reveal]');
 
