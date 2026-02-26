@@ -132,7 +132,7 @@
       background: var(--led-bg);
       background-clip: padding-box;
     }
-    /* Wood border (drawn as an overlay so we can texture it) */
+    /* Wood border — real texture tile + dark brown tint */
     .wood-frame::before {
       content: '';
       position: absolute;
@@ -140,43 +140,16 @@
       border-radius: 8px;
       z-index: 0;
       background:
-        /* Grain lines (dark) */
-        repeating-linear-gradient(
-          180deg,
-          transparent 0px,
-          rgba(18,10,6,0.3) 1px,
-          transparent 2px,
-          transparent 5px
+        linear-gradient(180deg,
+          rgba(32,16,4,0.80) 0%,
+          rgba(16,7,2,0.87) 50%,
+          rgba(28,13,4,0.80) 100%
         ),
-        /* Grain lines (light) */
-        repeating-linear-gradient(
-          180deg,
-          transparent 0px,
-          rgba(124,100,83,0.12) 1px,
-          transparent 2px,
-          transparent 9px
-        ),
-        /* Wider grain bands */
-        repeating-linear-gradient(
-          180deg,
-          transparent 0px,
-          rgba(90,68,53,0.08) 0px,
-          rgba(90,68,53,0.08) 2px,
-          transparent 3px,
-          transparent 18px
-        ),
-        /* Base wood color gradient (warmer, like the app) */
-        linear-gradient(
-          180deg,
-          #4A372B 0%,
-          #3D2B1E 30%,
-          #2B1E16 60%,
-          #3A2A1D 100%
-        );
+        url('assets/wood-dark-tile.jpg') repeat 0 0 / 320px auto;
       box-shadow:
         0 0 0 2px var(--wood-edge),
-        inset 0 0 0 2px rgba(124,100,83,0.15),
-        0 8px 32px rgba(0,0,0,0.6);
+        inset 0 0 0 2px rgba(120,90,65,0.12),
+        0 12px 44px rgba(0,0,0,0.7);
     }
     /* Inner edge highlight */
     .wood-frame::after {
@@ -184,48 +157,48 @@
       position: absolute;
       inset: -3px;
       border-radius: 3px;
-      border: 1px solid rgba(124,100,83,0.2);
+      border: 1px solid rgba(110,80,55,0.18);
       pointer-events: none;
       z-index: 1;
     }
 
-    /* Corner brackets (L-shaped metal plates) */
+    /* Corner brackets — square metal plate with centered rivet */
     .bracket {
       position: absolute;
       z-index: 5;
-      width: 32px;
-      height: 32px;
+      width: 22px;
+      height: 22px;
     }
+    /* Metal plate */
     .bracket::before {
       content: '';
       position: absolute;
-      background: linear-gradient(135deg, var(--metal-highlight) 0%, var(--metal-base) 40%, var(--metal-shadow) 100%);
-      border: 1px solid var(--metal-border);
-      border-radius: 2px;
+      inset: 0;
+      border-radius: 3px;
+      background: linear-gradient(145deg, #8E959F 0%, #60676F 45%, #363B41 100%);
+      border: 1px solid rgba(0,0,0,0.5);
+      box-shadow:
+        0 3px 7px rgba(0,0,0,0.65),
+        inset 0 1px 0 rgba(255,255,255,0.13);
     }
-    /* Bracket bolt */
+    /* Rivet */
     .bracket::after {
       content: '';
       position: absolute;
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, var(--metal-highlight), var(--metal-bolt) 60%, var(--metal-bolt-edge));
-      border: 1px solid var(--metal-border);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 33% 28%, #A8B0BB, #60686F 52%, #252A2F);
+      border: 1px solid rgba(0,0,0,0.5);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.55);
     }
-    .bracket.tl { top: -20px; left: -20px; }
-    .bracket.tl::before { top: 4px; left: 4px; width: 22px; height: 8px; }
-    .bracket.tl::after { top: 6px; left: 8px; }
-    .bracket.tr { top: -20px; right: -20px; }
-    .bracket.tr::before { top: 4px; right: 4px; width: 22px; height: 8px; }
-    .bracket.tr::after { top: 6px; right: 8px; }
-    .bracket.bl { bottom: -20px; left: -20px; }
-    .bracket.bl::before { bottom: 4px; left: 4px; width: 22px; height: 8px; }
-    .bracket.bl::after { bottom: 6px; left: 8px; }
-    .bracket.br { bottom: -20px; right: -20px; }
-    .bracket.br::before { bottom: 4px; right: 4px; width: 22px; height: 8px; }
-    .bracket.br::after { bottom: 6px; right: 8px; }
+    .bracket.tl { top: -11px; left: -11px; }
+    .bracket.tr { top: -11px; right: -11px; }
+    .bracket.bl { bottom: -11px; left: -11px; }
+    .bracket.br { bottom: -11px; right: -11px; }
 
     /* ── Trail Sign Header ── */
     .trail-sign {
@@ -535,33 +508,195 @@
     }
     .loading { animation: pulse 1.5s ease-in-out infinite; }
 
+    /* ── Section Brace (horizontal wood divider between sections) ── */
+    .section-brace {
+      height: 22px;
+      padding: 5px 0;
+      position: relative;
+      z-index: 1;
+    }
+    .section-brace-wood {
+      height: 12px;
+      border-radius: 3px;
+      border: 1px solid rgba(0,0,0,0.45);
+      background:
+        linear-gradient(180deg, rgba(32,16,4,0.80) 0%, rgba(16,7,2,0.87) 100%),
+        url('assets/wood-dark-tile.jpg') repeat 0 0 / 320px auto;
+    }
+
+    /* ── Inner Trail Sign (sections inside the frame, not at top) ── */
+    .trail-sign--inner {
+      margin: 0 -1px;
+      border-radius: 0;
+    }
+
+    /* ── LED Ticker (Mountain Overview) ── */
+    .led-ticker-panel { padding: 0; }
+    .ticker-row {
+      display: flex;
+      align-items: center;
+      padding: 5px 12px;
+      gap: 8px;
+      overflow: hidden;
+      height: 28px;
+    }
+    .ticker-bullet {
+      color: var(--open);
+      text-shadow: 0 0 6px var(--open-glow);
+      flex-shrink: 0;
+      font-size: 6px;
+      line-height: 1;
+    }
+    .ticker-track {
+      flex: 1;
+      overflow: hidden;
+      min-width: 0;
+    }
+    .ticker-content {
+      display: inline-block;
+      white-space: nowrap;
+      font-size: 13px;
+      color: var(--led-text);
+      letter-spacing: 0.3px;
+      animation: ticker-scroll 16s linear infinite;
+      will-change: transform;
+    }
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── Lift header row (inside LED panel, matching app's liftHeader) ── */
+    .lift-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 8px 8px;
+      font-size: 11px;
+      letter-spacing: 0.3px;
+      color: var(--led-dim);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      z-index: 1;
+    }
+    .lift-header-row .count-open { color: var(--open); font-weight: 700; text-shadow: 0 0 4px var(--open-glow); }
+    .lift-header-row .count-total { color: var(--led-text); font-weight: 700; }
+    .lift-header-row .time-fresh { color: var(--open); text-shadow: 0 0 4px var(--open-glow); }
+    .lift-header-row .time-stale { color: var(--scheduled); text-shadow: 0 0 4px var(--scheduled-glow); }
+    .lift-header-row .time-old { color: var(--closed); text-shadow: 0 0 4px var(--closed-glow); }
+
+    /* ── Lift more row (TAP FOR FULL BOARD footer) ── */
+    .lift-more-row {
+      text-align: center;
+      padding: 7px 8px;
+      font-size: 11px;
+      letter-spacing: 0.4px;
+      color: var(--led-dim);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      z-index: 1;
+    }
+    .lift-more-row a {
+      color: var(--open);
+      text-decoration: none;
+      text-shadow: 0 0 4px var(--open-glow);
+    }
+
+    /* ── Scanlines overlay on lift LED panel ── */
+    .led-panel--scanlines { position: relative; }
+    .led-panel--scanlines::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        180deg,
+        transparent 0px, transparent 1px,
+        rgba(0,0,0,0.06) 1px, rgba(0,0,0,0.06) 2px
+      );
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    /* ── Closed-state promo ── */
+    .closed-promo {
+      padding: 28px 20px 36px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .closed-promo-rule {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      letter-spacing: 0.6px;
+      color: var(--led-dim);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .closed-promo-rule::before,
+    .closed-promo-rule::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+    .closed-promo-headline {
+      font-family: "AvenirNextCondensed-DemiBold", "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      font-size: clamp(20px, 5vw, 26px);
+      font-weight: 800;
+      color: var(--led-text);
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .closed-promo-headline em {
+      color: var(--open);
+      text-shadow: 0 0 8px var(--open-glow);
+      font-style: normal;
+    }
+    .closed-promo-sub {
+      font-size: 11px;
+      color: var(--led-dim);
+      letter-spacing: 0.3px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .closed-promo-image {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+      margin: 0 auto 24px;
+      display: block;
+      box-shadow:
+        0 16px 48px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(255,255,255,0.06);
+      opacity: 0.92;
+    }
+    .closed-promo-cta img {
+      height: 40px;
+      display: block;
+      margin: 0 auto;
+    }
+
     /* ── Responsive ── */
     @media (max-width: 599px) {
       .lift-grid.two-col { grid-template-columns: 1fr; }
       .frame-wrapper { padding: 0 8px; margin: 12px auto; }
       .wood-frame { border-width: 18px; }
       .wood-frame::before { inset: -18px; }
-      .bracket { width: 26px; height: 26px; }
-      .bracket.tl { top: -15px; left: -15px; }
-      .bracket.tl::before { top: 3px; left: 3px; width: 18px; height: 7px; }
-      .bracket.tl::after { top: 4px; left: 6px; width: 7px; height: 7px; }
-      .bracket.tr { top: -15px; right: -15px; }
-      .bracket.tr::before { top: 3px; right: 3px; width: 18px; height: 7px; }
-      .bracket.tr::after { top: 4px; right: 6px; width: 7px; height: 7px; }
-      .bracket.bl { bottom: -15px; left: -15px; }
-      .bracket.bl::before { bottom: 3px; left: 3px; width: 18px; height: 7px; }
-      .bracket.bl::after { bottom: 4px; left: 6px; width: 7px; height: 7px; }
-      .bracket.br { bottom: -15px; right: -15px; }
-      .bracket.br::before { bottom: 3px; right: 3px; width: 18px; height: 7px; }
-      .bracket.br::after { bottom: 4px; right: 6px; width: 7px; height: 7px; }
+      .bracket { width: 18px; height: 18px; }
+      .bracket::after { width: 8px; height: 8px; }
+      .bracket.tl { top: -9px; left: -9px; }
+      .bracket.tr { top: -9px; right: -9px; }
+      .bracket.bl { bottom: -9px; left: -9px; }
+      .bracket.br { bottom: -9px; right: -9px; }
       .trail-sign { padding: 8px 12px; }
       .trail-sign-text { font-size: 16px; }
       .lift-row { font-size: 12px; padding: 4px 10px; }
       .led-summary { padding: 6px 10px; font-size: 10px; }
       .area-header { padding: 6px 10px 3px; font-size: 10px; }
-      .bottom-cta { padding: 10px 12px max(10px, env(safe-area-inset-bottom)); gap: 12px; }
-      .bottom-cta-copy { font-size: 11px; max-width: 220px; }
-      .bottom-cta-btn img { height: 32px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -592,18 +727,36 @@
       <span class="bracket bl"></span>
       <span class="bracket br"></span>
 
-      <!-- Trail Sign Header -->
+      <!-- MOUNTAIN OVERVIEW ─────────────────────── -->
       <div class="trail-sign">
         <span class="sign-bolt left"></span>
         <span class="sign-bolt right"></span>
-        <div class="trail-sign-text">Lift Status</div>
-        <div class="trail-sign-subtitle">Vail Mountain</div>
+        <div class="trail-sign-text">Mountain Overview</div>
+        <div class="trail-sign-subtitle" id="resort-date"></div>
+      </div>
+      <div class="led-panel led-ticker-panel">
+        <div class="ticker-row">
+          <span class="ticker-bullet">&#9679;</span>
+          <div class="ticker-track">
+            <span class="ticker-content" id="overview-ticker"></span>
+          </div>
+        </div>
       </div>
 
-      <!-- LED Panel -->
-      <div class="led-panel">
-        <div class="led-summary" id="summary">
-          <span><span class="count-open">--</span> / <span class="count-total">--</span> OPEN</span>
+      <!-- Section brace ─────────────────────────── -->
+      <div class="section-brace">
+        <div class="section-brace-wood"></div>
+      </div>
+
+      <!-- LIFT STATUS ────────────────────────────── -->
+      <div class="trail-sign trail-sign--inner">
+        <span class="sign-bolt left"></span>
+        <span class="sign-bolt right"></span>
+        <div class="trail-sign-text">Lift Status</div>
+      </div>
+      <div class="led-panel led-panel--scanlines">
+        <div class="lift-header-row" id="summary">
+          <span><span class="count-open">--</span> / <span class="count-total">--</span> LIFTS OPEN</span>
           <span id="summary-time">--</span>
         </div>
 
@@ -611,6 +764,9 @@
           <div class="board-msg loading">LOADING...</div>
         </div>
 
+        <div class="lift-more-row" id="lift-more-row" style="display:none;">
+          TAP FOR FULL BOARD
+        </div>
       </div>
     </div>
   </div>
@@ -625,17 +781,6 @@
     <span class="sep">&middot;</span>
     <span>&copy; 2025-2026 Groomd</span>
   </footer>
-  <div class="bottom-spacer"></div>
-
-  <!-- Fixed bottom CTA bar -->
-  <div class="bottom-cta" id="bottom-cta" style="display: none;">
-    <div class="bottom-cta-copy" id="bottom-cta-copy">
-      <span class="highlight">Every lift. Lock screen widgets.</span> Grooming reports. Weather. Free on iOS.
-    </div>
-    <a href="https://apps.apple.com/us/app/groomd-ski-mountain-reports/id6756031302" class="bottom-cta-btn" aria-label="Download on the App Store">
-      <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
-    </a>
-  </div>
 
   <script>
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -670,8 +815,46 @@
     let lastGenerated = null;
     let refreshTimer = null;
     let tickTimer = null;
+    let currentOpenCount = 0;
+    let currentTotalCount = 0;
 
     const $ = id => document.getElementById(id);
+
+    // ── Date label in trail sign subtitle ──────────────────────────
+    function updateResortDate() {
+      const el = $('resort-date');
+      if (!el) return;
+      const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+      const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+      const now = new Date();
+      el.textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+    }
+
+    // ── Mountain Overview ticker ───────────────────────────────────
+    function buildTickerText() {
+      const now = new Date();
+      const h = now.getHours() % 12 || 12;
+      const m = now.getMinutes().toString().padStart(2, '0');
+      const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+      const time = h + ':' + m + ' ' + ampm;
+      if (currentTotalCount > 0) {
+        const liftWord = currentOpenCount === 1 ? 'lift' : 'lifts';
+        return 'It\u2019s ' + time + ' and there are ' + currentOpenCount + ' ' + liftWord + ' open.';
+      }
+      return 'It\u2019s ' + time + ' at Vail.';
+    }
+
+    function updateOverviewTicker() {
+      const el = $('overview-ticker');
+      if (!el) return;
+      const text = buildTickerText();
+      const div = '   \u2022   ';
+      // Four-part content → translateX(-50%) scrolls exactly one [text + div] seamlessly
+      el.textContent = text + div + text + div;
+      el.style.animation = 'none';
+      void el.offsetHeight; // force reflow to restart animation
+      el.style.animation = '';
+    }
 
     function timeAgo(iso) {
       if (!iso) return '--';
@@ -754,7 +937,28 @@
       lastGenerated = data.generated;
       updateTimestamp();
 
+      // Update counts and ticker with fresh data
+      currentOpenCount = open.length;
+      currentTotalCount = lifts.length;
+      updateOverviewTicker();
+
       const gridClass = 'lift-grid' + (CONFIG.TWO_COLUMN ? ' two-col' : '');
+
+      // --- All-closed state: marketing moment instead of empty board ---
+      if (open.length === 0) {
+        container.innerHTML = `
+          <div class="closed-promo">
+            <div class="closed-promo-rule">Mountain Closed</div>
+            <div class="closed-promo-headline">Lifts are sleeping.<br><em>Your next powder day isn't.</em></div>
+            <div class="closed-promo-sub">Grooming reports, snow forecasts &amp; live lift status<br>at 60 resorts &mdash; free on iOS.</div>
+            <img class="closed-promo-image" src="assets/new_design/Groomd_Website_Hero.png" alt="Groomd app &mdash; grooming reports, lift status &amp; weather">
+            <a href="${CONFIG.APP_STORE_URL}" class="closed-promo-cta" aria-label="Download on the App Store">
+              <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+            </a>
+          </div>`;
+        $('lift-more-row').style.display = 'none';
+        return;
+      }
 
       // --- Visible lifts ---
       const visible = open.slice(0, CONFIG.VISIBLE_LIFTS);
@@ -782,9 +986,8 @@
 
       container.innerHTML = html;
 
-      // --- Show bottom CTA bar ---
-      const cta = $('bottom-cta');
-      cta.style.display = '';
+      // --- Show footer rows ---
+      $('lift-more-row').style.display = '';
     }
 
     async function fetchData() {
@@ -813,10 +1016,16 @@
       tickTimer = setInterval(updateTimestamp, 15000);
     }
 
+    updateResortDate();
+    updateOverviewTicker();
+
     fetchData().then(() => {
       startRefresh();
       startTick();
     });
+
+    // Refresh ticker clock every 30s (matches app cadence)
+    setInterval(updateOverviewTicker, 30000);
   </script>
 </body>
 </html>
