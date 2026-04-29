@@ -409,6 +409,24 @@ a {
     color: var(--color-slate);
 }
 
+.built-by {
+    font-size: 0.75rem;
+    color: var(--color-slate);
+    margin-top: 0.75rem;
+    opacity: 0.7;
+}
+
+.built-by a {
+    color: var(--color-slate);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.built-by a:hover {
+    color: var(--color-accent-light);
+    text-decoration: underline;
+}
+
 /* ===================================
    Responsive Breakpoints
    =================================== */
