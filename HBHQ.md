@@ -1,10 +1,12 @@
 ---
 deploy:
-  type: none
+  type: github-actions
+  review_mode: github-actions
+  merge_deploys_prod: true
 actions:
-  staging_label: No deploy
-  ship_label: Merge PR
-  merge_label: Merge PR
+  staging_label: Review PR
+  ship_label: Merge to Main
+  merge_label: Merge to Main
   setup_merge_label: Merge HBHQ.md
   send_back_label: Request changes
 ---
@@ -13,7 +15,7 @@ actions:
 
 Groomd Site is the static marketing/support site for Groomd plus a Cloudflare Worker API under `cloudflare-worker/`.
 
-HBHQ should treat this as merge-only until the hosting and Cloudflare deploy path are wired into HBHQ.
+Each request should create a branch and PR. HBHQ should treat this as GitHub-Actions-on-merge for site edits. Cloudflare Worker deploys remain explicit/manual until that path is wired into HBHQ.
 
 ## Build And Test
 
